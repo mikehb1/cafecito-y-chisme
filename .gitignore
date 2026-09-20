@@ -1,2 +1,5 @@
 _dev/
 *.log
+
+.vercel
+.env*
