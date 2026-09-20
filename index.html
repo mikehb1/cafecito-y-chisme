@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cafesín &amp; chisme · Coffee &amp; Breakfast</title>
+<meta name="description" content="Cafesín & chisme — el café se prepara con amor y el chisme se sirve bien caliente. Desayunos y bebidas artesanales en la Riviera Maya.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6eedd;
+  --surface:#fffaf1;
+  --surface-2:#efe2cb;
+  --gold:#b98a45;
+  --gold-soft:#c89d5c;
+  --cream:#3c2b1c;
+  --muted:#6b563f;
+  --dim:#9a8568;
+  --line:rgba(150,110,60,.22);
+  --radius:18px;
+  --shadow:0 18px 40px -12px rgba(90,70,40,.25);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Outfit',system-ui,sans-serif;
+  background:var(--bg);color:var(--cream);
+  line-height:1.6;overflow-x:hidden;
+}
+::selection{background:var(--gold);color:#2a1c0e}
+::placeholder{color:var(--dim)}
+
+/* ---------- Navegación ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;gap:20px;padding:16px 40px;
+  background:rgba(246,238,221,.86);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  transition:padding .3s, box-shadow .3s;
+}
+.scrolled .nav{padding:10px 40px;box-shadow:0 8px 24px rgba(90,70,40,.18)}
+.nav .brand{display:flex;align-items:center;gap:10px}
+.nav .brand img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--gold)}
+.nav .brand span{font-family:'Pacifico';font-size:22px;color:var(--cream)}
+.nav-links{display:flex;gap:6px;list-style:none}
+.nav-links a{
+  color:var(--muted);text-decoration:none;padding:9px 14px;border-radius:999px;
+  font-size:15px;font-weight:500;transition:.25s;
+}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a.active{background:rgba(240,198,116,.14);color:var(--gold)}
+.nav .cta{
+  margin-left:auto;background:var(--gold);color:#2a1c0e;border:none;
+  padding:11px 20px;border-radius:999px;font-weight:700;font-size:15px;cursor:pointer;
+  transition:.25s;text-decoration:none;
+}
+.nav .cta:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(185,138,69,.35)}
+.burger{display:none;background:none;border:1px solid var(--gold);color:var(--gold);
+  width:44px;height:44px;border-radius:10px;font-size:20px;cursor:pointer;margin-left:auto}
+
+.mobile-menu{
+  position:fixed;inset:0;z-index:200;background:rgba(26,18,11,.97);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  opacity:0;pointer-events:none;transition:.3s;
+}
+.mobile-menu.open{opacity:1;pointer-events:auto}
+.mobile-menu a{
+  color:var(--cream);text-decoration:none;font-size:26px;font-weight:600;padding:12px 30px;
+  border-bottom:1px solid var(--line);
+}
+.mobile-menu .close{
+  position:absolute;top:24px;right:28px;background:none;border:none;color:var(--gold);
+  font-size:34px;cursor:pointer;
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  min-height:100vh;position:relative;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;
+  padding:120px 24px 80px;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(185,138,69,.18), transparent 60%),
+    linear-gradient(180deg,#f3e8d2 0%, #f6eedd 45%, #efe2cb 100%);
+}
+.hero::before{content:'';position:absolute;inset:0;
+  background:url('assets/fuente/banda_cafe.jpg') center 30% / cover no-repeat;
+  opacity:.22;filter:saturate(.85) brightness(.95);z-index:0}
+.hero::after{content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg, rgba(246,238,221,.5) 0%, rgba(246,238,221,.12) 45%, rgba(239,226,203,.65) 100%)}
+.hero>*{position:relative;z-index:2}
+.hero .logo{
+  width:210px;height:210px;border-radius:50%;object-fit:cover;
+  border:5px solid var(--gold);box-shadow:0 0 44px rgba(240,198,116,.4);
+  animation:float 5s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero h1{
+  font-family:'Pacifico';color:var(--cream);font-size:58px;margin-top:28px;line-height:1.1;
+  text-shadow:0 2px 18px rgba(0,0,0,.4);
+}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero .tagline{color:var(--muted);font-size:21px;font-weight:500;margin-top:14px;max-width:560px}
+.hero .chip{
+  display:inline-flex;align-items:center;gap:7px;margin-top:6px;color:var(--dim);
+  border:1px solid var(--gold-soft);padding:5px 14px;border-radius:999px;font-size:13.5px;letter-spacing:.5px;
+}
+.hero .actions{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+.btn-gold{
+  display:inline-block;background:var(--gold);color:#2a1c0e;text-decoration:none;padding:15px 30px;
+  border-radius:999px;font-weight:700;font-size:17px;transition:.25s;
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(185,138,69,.35)}
+.btn-ghost{
+  display:inline-block;background:transparent;border:2px solid var(--gold-soft);color:var(--cream);
+  text-decoration:none;padding:14px 28px;border-radius:999px;font-weight:600;font-size:15.5px;transition:.25s;
+}
+.btn-ghost:hover{background:rgba(240,198,116,.12);border-color:var(--gold)}
+.scroll-down{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:24px;
+  animation:bob 2s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+/* ---------- Secciones ---------- */
+section{position:relative;scroll-margin-top:90px}
+.wrap{max-width:1150px;margin:0 auto;padding:0 24px}
+.eyebrow{
+  display:inline-block;color:var(--gold);font-family:'Pacifico';font-size:26px;letter-spacing:1px;
+}
+h2.sec{font-family:'Outfit';font-weight:800;font-size:clamp(30px,4vw,44px);color:var(--cream);margin-top:8px}
+.sec-head{text-align:center;margin-bottom:44px}
+.sec-head .sub{color:var(--dim);font-size:16.5px;margin-top:10px;max-width:560px;margin-left:auto;margin-right:auto}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s, transform .7s}
+.reveal.in{opacity:1;transform:none}
+.delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.3s}
+
+/* ---------- Acerca ---------- */
+.about{background:var(--surface);border-top:1px solid var(--line)}
+.about-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+.about-copy p{color:var(--muted);font-size:17.5px;margin:16px 0}
+.about-copy p strong{color:var(--gold)}
+.about-points{list-style:none;display:flex;flex-direction:column;gap:14px}
+.about-points li{
+  display:flex;gap:14px;align-items:flex-start;color:var(--muted);font-size:16px;line-height:1.5;
+}
+.about-points li .dot{
+  width:34px;height:34px;flex:none;border-radius:50%;background:rgba(240,198,116,.12);
+  color:var(--gold);display:grid;place-items:center;font-size:17px;border:1px solid var(--gold-soft);
+}
+.about-visual{
+  background:url('img/DSC03892_ff3373.jpg') center 40% / cover no-repeat;
+  border-radius:var(--radius);box-shadow:var(--shadow);aspect-ratio:4/3;
+  border:1px solid var(--line);
+}
+
+/* ---------- Menú ---------- */
+.menu{background:var(--surface-2)}
+.menu-tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:26px 0 40px}
+.tab{
+  background:transparent;border:1px solid var(--line);color:var(--muted);padding:11px 20px;border-radius:999px;
+  font-weight:600;font-size:15px;cursor:pointer;transition:.22s;
+}
+.tab:hover{color:var(--gold);border-color:var(--gold-soft)}
+.tab.active{background:var(--gold);color:#2a1c0e;border-color:var(--gold);font-weight:700}
+
+.panel{display:none;animation:fade .35s}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.menu-cat-title{color:var(--gold);font-family:'Pacifico';font-size:30px;text-align:center;margin-bottom:30px}
+.drink-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.drink{
+  background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;
+  display:flex;flex-direction:column;transition:.25s;box-shadow:none;
+}
+.drink:hover{transform:translateY(-3px);border-color:var(--gold-soft);box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.drink h3{color:var(--cream);font-size:19px;font-weight:700;display:flex;align-items:center;gap:8px}
+.drink .price{margin-left:auto;color:var(--gold);font-weight:800;font-size:18px;white-space:nowrap}
+.drink .badge{
+  background:rgba(240,198,116,.12);color:var(--gold);font-size:11px;font-weight:700;
+  padding:2px 9px;border-radius:999px;letter-spacing:.3px;
+}
+.drink p{color:var(--dim);font-size:14.8px;margin-top:8px;line-height:1.5}
+
+.extras{
+  margin-top:44px;background:var(--surface);border:1px solid var(--gold-soft);border-radius:var(--radius);
+  padding:26px 30px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
+}
+.extras .t{font-size:20px;font-weight:800;color:var(--cream)}
+.extras .t small{display:block;color:var(--dim);font-size:14px}
+.extras .chips{display:flex;gap:10px;flex-wrap:wrap}
+.extras .chips span{
+  background:rgba(240,198,116,.1);border:1px solid var(--gold-soft);color:var(--muted);
+  padding:8px 16px;border-radius:999px;font-size:14.5px;
+}
+
+/* ---------- Galería ---------- */
+.gallery{background:var(--surface-2);border-top:1px solid var(--line)}
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;grid-auto-rows:230px}
+.g-item{
+  background:linear-gradient(135deg, rgba(240,198,116,.06), rgba(240,198,116,.02));
+  border:2px dashed var(--gold-soft);border-radius:14px;display:grid;place-items:center;color:var(--dim);
+  text-align:center;font-size:14.5px;font-weight:500;padding:16px;line-height:1.5;
+}
+.g-item{
+  background:center/cover;color:transparent;border:1px solid rgba(240,198,116,.25);
+  position:relative;overflow:hidden;place-items:end start;
+}
+.g-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(17,12,6,.82),transparent 60%);z-index:0}
+.g-item:hover{transform:scale(1.02);border-color:var(--gold)}
+.g-item .g-cap{position:relative;z-index:1;margin:0;padding:12px 16px;color:var(--cream);font-size:15px;font-weight:700;letter-spacing:.2px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.g-item .cam{font-size:30px;margin-bottom:8px;color:var(--gold)}
+.g-item.wide{grid-column:span 2}
+.g-item.tall{grid-row:span 2}
+
+/* ---------- Visita / Info ---------- */
+.visit{background:var(--bg);position:relative;
+  background:radial-gradient(circle at 80% 20%, rgba(240,198,116,.1), transparent 55%), var(--bg)}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.info-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.info-card .icon{font-size:26px;color:var(--gold);margin-bottom:12px}
+.info-card h3{color:var(--cream);font-size:18px;font-weight:700}
+.info-card p{color:var(--muted);font-size:15.5px;line-height:1.55;margin-top:8px}
+.info-card a{color:var(--gold);text-decoration:none;font-weight:600}
+.visit-cta{text-align:center;margin:44px 0 10px}
+.visit-cta .map-note{color:var(--dim);font-size:15px;margin-top:14px;max-width:640px;margin-left:auto;margin-right:auto}
+.map-embed{margin-top:34px;border-radius:18px;overflow:hidden;border:1px solid var(--line);
+  box-shadow:0 14px 40px rgba(0,0,0,.16)}
+.map-embed iframe{display:block;width:100%;height:420px;border:0;filter:saturate(.92)}
+
+/* ---------- Footer ---------- */
+footer{background:var(--surface-2);border-top:1px solid var(--line);padding:52px 24px;text-align:center}
+footer .brand-sm{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:14px}
+footer .brand-sm img{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold)}
+footer .brand-sm span{font-family:'Pacifico';color:var(--cream);font-size:21px}
+footer .ig{color:var(--gold);font-size:19px;font-weight:700;text-decoration:none;display:block;margin:6px 0}
+footer .ig:hover{text-decoration:underline}
+footer .copy{color:var(--dim);font-size:13.5px;margin-top:18px}
+
+/* ---------- Responsive ---------- */
+@media(max-width:900px){
+  .nav-links,.nav .cta{display:none}
+  .burger{display:block}
+  .about-grid{grid-template-columns:1fr;gap:30px}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .info-grid{grid-template-columns:1fr}
+  .hero h1{font-size:42px}
+}
+@media(max-width:560px){
+  .hero h1{font-size:34px}
+  .hero .logo{width:170px;height:170px}
+  .gallery-grid{grid-template-columns:1fr}
+  .g-item.wide{grid-column:auto}
+  .g-item.tall{grid-row:auto}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .hero .logo{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Navegación -->
+<nav class="nav" id="nav">
+  <div class="brand">
+    <img src="assets/fuente/logo_cafesin.jpg" alt="Cafesín & chisme">
+    <span>Cafesín & chisme</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#nosotros" class="active">Nosotros</a></li>
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#visita">Visítanos</a></li>
+  </ul>
+  <a class="cta" href="#visita">Encuéntranos</a>
+  <button class="burger" id="burger" aria-label="Abrir menú">☰</button>
+</nav>
+
+<!-- Menú móvil -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close" id="closeMenu" aria-label="Cerrar">✕</button>
+  <a href="#nosotros">Nosotros</a>
+  <a href="#menu">Menú</a>
+  <a href="#galeria">Galería</a>
+  <a href="#visita">Visítanos</a>
+</div>
+
+<!-- Hero -->
+<header class="hero" id="hero">
+  <img class="logo" src="assets/fuente/logo_cafesin.jpg" alt="Logo Cafesín & chisme">
+  <h1>Cafesín <em>&amp;</em> chisme</h1>
+  <p class="tagline">Aquí el café se prepara con amor… y el chisme se sirve bien caliente.</p>
+  <span class="chip">☕ Coffee &amp; Breakfast · Riviera Maya</span>
+  <div class="actions">
+    <a class="btn-gold" href="#menu">Ver el menú</a>
+    <a class="btn-ghost" href="#visita">Dónde estamos</a>
+  </div>
+  <div class="scroll-down">▾</div>
+</header>
+
+<!-- Nosotros -->
+<section class="about" id="nosotros">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Buenas vibras</span>
+      <h2 class="sec">Ven por un café,<br>quédate por la plática</h2>
+      <p class="sub">Un espacio cálido donde el buen café, los desayunos de verdad y la buena conversación se vuelven tu plan favorito del día.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-copy reveal">
+        <p><strong>Cafesín &amp; chisme</strong> nació de una idea sencilla: un lugar donde el café se toma despacio y las historias se comparten bien servidas.</p>
+        <p>Preparamos el espresso al momento, nuestras bebidas frías y smoothies con fruta fresca, y los desayunos caseros que saben a abrazo. Sin prisa, pero siempre frescos.</p>
+        <ul class="about-points reveal delay-1">
+          <li><span class="dot">☕</span><span><strong>Café artesanal:</strong> espresso, cold brew y especialidades preparadas al momento.</span></li>
+          <li><span class="dot">🍹</span><span><strong>Frescura real:</strong> smoothies y jugos naturales con fruta del día.</span></li>
+          <li><span class="dot">💛</span><span><strong>Vibe de barrio:</strong> desayunos caseros y el mejor ángulo para ponerte al día con todo.</span></li>
+        </ul>
+      </div>
+      <div class="about-visual reveal delay-2" aria-label="Preparación de café"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Menú -->
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Nuestro menú</span>
+      <h2 class="sec">Bebidas con carácter</h2>
+      <p class="sub">Frías, calientes, smoothies, desayunos o comidas de la casa. Todo se prepara fresco, al momento.</p>
+    </div>
+
+    <div class="menu-tabs reveal" id="tabs">
+      <button class="tab active" data-tab="frias">❄️ Frías</button>
+      <button class="tab" data-tab="calientes">🔥 Calientes</button>
+      <button class="tab" data-tab="smoothies">🥤 Smoothies / Frappés</button>
+      <button class="tab" data-tab="jugos">🍊 Jugos &amp; Limonadas</button>
+      <button class="tab" data-tab="tarde">🌇 Tarde</button>
+      <button class="tab" data-tab="desayunos">🍳 Desayunos</button>
+    </div>
+
+    <!-- Frías -->
+    <div class="panel active" id="panel-frias">
+      <div class="menu-cat-title reveal">Bebidas Frías</div>
+      <div class="drink-grid">
+        <div class="drink reveal"><h3>Cold Brew</h3><p>Extracción lenta y suave. Intenso en sabor, ligero en amargura. El favorito de los que saben.</p></div>
+        <div class="drink reveal delay-1"><h3>Latte Frío <span class="badge">Clásico</span></h3><p>Espresso suave con leche fría y hielo. Cremoso y refrescante.</p></div>
+        <div class="drink reveal delay-2"><h3>Café Dalgona</h3><p>Espuma de café batida a mano sobre leche. Dulce, cremoso y fotogénico.</p></div>
+        <div class="drink reveal"><h3>Moka Chino Frío</h3><p>Chocolate y café frío en equilibrio. Con opción intenso o suave.</p></div>
+        <div class="drink reveal delay-1"><h3>Espresso Tonic</h3><p>Espresso sobre agua tónica con hielo. El giro cafetero y con burbuja que no esperabas.</p></div>
+        <div class="drink reveal delay-2"><h3>Orange Coffee <span class="badge">Firma</span></h3><p>Café y naranja fresca. Ácido, equilibrado y perfecto para el calor.</p></div>
+        <div class="drink reveal"><h3>Frappuccino</h3><p>Batido cremoso y helado. Elige tu sabor: <strong>chocolate</strong> o <strong>caramelo</strong>.</p></div>
+      </div>
+    </div>
+
+    <!-- Calientes -->
+    <div class="panel" id="panel-calientes">
+      <div class="menu-cat-title reveal">Bebidas Calientes</div>
+      <div class="drink-grid">
+        <div class="drink reveal"><h3>Espresso</h3><p>Simple o doble. Puro y directo, como debe ser.</p></div>
+        <div class="drink reveal delay-1"><h3>Americano</h3><p>Espresso alargado con agua caliente. Suave y aromático.</p></div>
+        <div class="drink reveal delay-2"><h3>Latte</h3><p>Espresso con leche al vapor. Suave, cremoso, el abrazo de la casa.</p></div>
+        <div class="drink reveal"><h3>Capuchino <span class="badge">Clásico</span></h3><p>Igual cantidad de café, leche y espuma. El equilibrio perfecto.</p></div>
+        <div class="drink reveal delay-1"><h3>Moka Chino Caliente</h3><p>Chocolate caliente con espresso. Dulce y reconfortante.</p></div>
+        <div class="drink reveal delay-2"><h3>Té de la casa</h3><p>Selección de tés calientes para bajar el ritmo y respirar.</p></div>
+      </div>
+    </div>
+
+    <!-- Smoothies -->
+    <div class="panel" id="panel-smoothies">
+      <div class="menu-cat-title reveal">Smoothies &amp; Frappés</div>
+      <div class="drink-grid">
+        <div class="drink reveal"><h3>Frutos Rojos</h3><p>Intenso, frutado y vibrante. Antioxidante y delicioso.</p></div>
+        <div class="drink reveal delay-1"><h3>Mango</h3><p>Cremoso y tropical. El sabor del Caribe en un vaso.</p></div>
+        <div class="drink reveal delay-2"><h3>Piña · Jengibre · Miel</h3><p>Refrescante, con el toque picante y dulce que despierta.</p></div>
+        <div class="drink reveal"><h3>Coco · Piña · Menta</h3><p>Tropical y fresco. La combinación que sabe a vacaciones.</p></div>
+      </div>
+    </div>
+
+    <!-- Jugos -->
+    <div class="panel" id="panel-jugos">
+      <div class="menu-cat-title reveal">Jugos &amp; Limonadas</div>
+      <div class="drink-grid">
+        <div class="drink reveal"><h3>Jugo Verde</h3><p>Espinaca, manzana y lo que el día pida. Puro bienestar.</p></div>
+        <div class="drink reveal delay-1"><h3>Jugo de Naranja</h3><p>Exprimido al momento. Frescura cítrica pura.</p></div>
+        <div class="drink reveal delay-2"><h3>Jugo de Zanahoria</h3><p>Dulce natural y reparador. Un clásico que nunca falla.</p></div>
+        <div class="drink reveal"><h3>Limonada Natural</h3><p>Limón, azúcar y agua, recién exprimida.</p></div>
+        <div class="drink reveal delay-1"><h3>Limonada Mineral</h3><p>Con el toque de burbuja. Refrescante de verdad.</p></div>
+        <div class="drink reveal delay-2"><h3>Suero Hidratante</h3><p>Ideal después del sol o el ejercicio. Se agradece siempre.</p></div>
+      </div>
+    </div>
+
+    <!-- Tarde -->
+    <div class="panel" id="panel-tarde">
+      <div class="menu-cat-title reveal">Bebidas de la Tarde</div>
+      <div class="drink-grid">
+        <div class="drink reveal"><h3>Maracuyá</h3><p>Pasiflora fresca, ácida y floral. El favorito de las tardes.</p></div>
+        <div class="drink reveal delay-1"><h3>Limón con Pepino</h3><p>Cítrico, fresco y relajante. El reset perfecto.</p></div>
+        <div class="drink reveal delay-2"><h3>Jamaica</h3><p>Flor de jamaica refrescante y vibrante. Puro color.</p></div>
+        <div class="drink reveal"><h3>Limonada Mineral</h3><p>La clásica, con su burbuja inconfundible.</p></div>
+        <div class="drink reveal delay-1"><h3>Limonada Natural</h3><p>La versión suave para cualquier momento.</p></div>
+      </div>
+    </div>
+
+    <!-- Desayunos & Comida -->
+    <div class="panel" id="panel-desayunos">
+      <div class="menu-cat-title reveal">🍳 Desayunos &amp; Comida</div>
+      <div class="drink-grid">
+        <div class="drink reveal"><h3>Huevos al gusto <span class="badge">Combo</span></h3><p>Tocino, jamón o a la mexicana. Incluye jugo o fruta + café americano caliente.</p><span class="price">$140</span></div>
+        <div class="drink reveal delay-1"><h3>Chilaquiles con Huevo</h3><p>Rojos o verdes. Totopos crujientes bañados en salsa artesanal.</p><span class="price">$120</span></div>
+        <div class="drink reveal delay-2"><h3>Chilaquiles con Pollo</h3><p>Rojos o verdes. Con pechuga deshebrada de la casa.</p><span class="price">$140</span></div>
+        <div class="drink reveal"><h3>Chilaquiles con Bistec</h3><p>Rojos o verdes. Acompañados de bistec tierno y asado.</p><span class="price">$160</span></div>
+        <div class="drink reveal delay-1"><h3>Torta de Chilaquiles</h3><p>El clásico antojito relleno de chilaquiles con crema y queso.</p><span class="price">$95</span></div>
+        <div class="drink reveal delay-2"><h3>Molletes tradicionales</h3><p>Frijoles, queso fundido y pico de gallo. El favorito de siempre.</p><span class="price">$120</span></div>
+        <div class="drink reveal"><h3>Hot Cakes</h3><p>Espesos y calientes, hechos al momento. Con la miel de la casa.</p><span class="price">$120</span></div>
+      </div>
+    </div>
+
+    <div class="extras reveal">
+      <div class="t">Personaliza tu bebida
+        <small>Agrega lo que quieras, sin complicarte.</small>
+      </div>
+      <div class="chips">
+        <span>🥛 Leche extra</span>
+        <span>🍫 Jarabe de chocolate</span>
+        <span>🍯 Jarabe de caramelo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Galería -->
+<section class="gallery" id="galeria">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">El ambiente</span>
+      <h2 class="sec">Mira el lugar</h2>
+      <p class="sub">Un vistazo al lugar, el bar y lo que preparamos cada mañana.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="g-item reveal wide" style="background-image:url('img/DSC04097_c900cd.jpg')">
+        <span class="g-cap">☕ La casa · nuestro café</span>
+      </div>
+      <div class="g-item reveal tall" style="background-image:url('img/DSC03951_bf7a21.jpg')">
+        <span class="g-cap">☕ Bar de café</span>
+      </div>
+      <div class="g-item reveal delay-1" style="background-image:url('img/DSC03909_ddc8c3.jpg')">
+        <span class="g-cap">🥤 Smoothies &amp; frappés</span>
+      </div>
+      <div class="g-item reveal delay-1 wide" style="background-image:url('img/DSC04025_-_copia_f7826e.jpg')">
+        <span class="g-cap">🍳 Desayunos caseros</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Visita -->
+<section class="visit" id="visita">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Te esperamos</span>
+      <h2 class="sec">Visítanos</h2>
+      <p class="sub">Pásate por una bebida y quédate por la plática. El café está listo para ti.</p>
+    </div>
+    <div class="info-grid">
+      <div class="info-card reveal">
+        <div class="icon">📍</div>
+        <h3>Ubicación</h3>
+        <p>20 av. con 12 bis, Loc 4,<br>Centro, 77710 Playa del Carmen, Q.R.<br><a href="https://www.google.com/maps/search/?api=1&query=20+avenida+con+12+bis+Local+4+Centro+77710+Playa+del+Carmen+QR" target="_blank" rel="noopener">Abrir en el mapa →</a></p>
+      </div>
+      <div class="info-card reveal delay-1">
+        <div class="icon">🕗</div>
+        <h3>Horario</h3>
+        <p>Lunes a Domingo<br>7:00 am – 9:00 pm</p>
+      </div>
+      <div class="info-card reveal delay-2">
+        <div class="icon">📱</div>
+        <h3>Síguenos</h3>
+        <p>Enterate de todo el chisme.<br><a href="https://instagram.com/cafecito.y_chisme">@cafecito.y_chisme →</a></p>
+      </div>
+    </div>
+    <div class="map-embed reveal">
+      <iframe
+        src="https://www.google.com/maps?q=20%20avenida%20con%2012%20bis%2C%20Local%204%2C%20Centro%2C%2077710%20Playa%20del%20Carmen%2C%20QR&output=embed"
+        width="100%" height="420" style="border:0" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade" title="Ubicación de Cafesín & Chisme"></iframe>
+    </div>
+    <div class="visit-cta reveal">
+      <a class="btn-gold" href="https://instagram.com/cafecito.y_chisme">Escríbenos por Instagram</a>
+      <p class="map-note">Pregunta por el mapa exacto y confirmación de horario — casi siempre estamos, pero el chisme último lo contamos ahí. 😉</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand-sm">
+    <img src="assets/fuente/logo_cafesin.jpg" alt="Logo">
+    <span>Cafesín &amp; chisme</span>
+  </div>
+  <a class="ig" href="https://instagram.com/cafecito.y_chisme">@cafecito.y_chisme</a>
+  <p class="tagline-foot" style="color:var(--dim);font-style:italic;margin-top:6px">"Ven por un latte, quédate por la plática."</p>
+  <p class="copy">© <span id="year"></span> Cafesín &amp; chisme · Coffee &amp; Breakfast · Riviera Maya</p>
+</footer>
+
+<script>
+// Año dinámico
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Nav con scroll
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 30);
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+// Highlight de sección activa
+const links = [...document.querySelectorAll('.nav-links a')];
+const sections = ['nosotros','menu','galeria','visita'].map(id => document.getElementById(id));
+const spy = () => {
+  const y = window.scrollY + 120;
+  let current = 'nosotros';
+  sections.forEach(s => { if (y >= s.offsetTop) current = s.id; });
+  links.forEach(a => a.className = a.getAttribute('href').slice(1) === current ? 'active' : '');
+};
+window.addEventListener('scroll', spy, {passive:true}); spy();
+
+// Menú móvil
+const burger = document.getElementById('burger');
+const mobile = document.getElementById('mobileMenu');
+const closeM = document.getElementById('closeMenu');
+burger.onclick = () => mobile.classList.add('open');
+closeM.onclick = () => mobile.classList.remove('open');
+document.querySelectorAll('.mobile-menu a').forEach(a =>
+  a.addEventListener('click', () => mobile.classList.remove('open')));
+mobile.addEventListener('click', e => { if (e.target === mobile) mobile.classList.remove('open'); });
+
+// Menú tabs
+const tabs = document.getElementById('tabs');
+const panels = document.querySelectorAll('.panel');
+tabs.querySelectorAll('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabs.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    panels.forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// Reveal al hacer scroll
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); } });
+}, {threshold:.14});
+reveals.forEach(r => io.observe(r));
+</script>
+</body>
+</html>
